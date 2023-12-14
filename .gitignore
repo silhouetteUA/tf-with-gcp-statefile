@@ -1,0 +1,4 @@
+.terraform*
+terraform.tfvars
+show.output
+terraform.tfstate*
