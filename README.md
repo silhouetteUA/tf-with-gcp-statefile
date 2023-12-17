@@ -8,6 +8,7 @@ This TF workflow creates:
 - K8S cluster: local via KIND *OR* GCP-GKE
 - Deploys FluxCD on K8S
 - FluxCD start reconciliation with remote gut hub repo: kbot
+- Both localhost KIND and GKE clusters maintain tfstate in remote GCP bucket
 
 **Create manifest for a git source for FluxCD:**
 
