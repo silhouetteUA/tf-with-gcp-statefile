@@ -10,14 +10,14 @@ Both - local (KIND) and remote (GCP-GKE) deployment are available here
 flux create source git kbot \                                                                                                                            
 > --url=https://github.com/silhouetteUA/kbot \
 > --branch=main \
-> --namespace=demo-namespace \
+> --namespace=course \
 > --export
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: kbot
-  namespace: demo-namespace
+  namespace: course
 spec:
   interval: 1m0s
   ref:
@@ -30,7 +30,7 @@ spec:
 
 
 flux create helmrelease kbot \                                                                                                                                
-> --namespace=demo-namespace \
+> --namespace=course \
 > --source=GitRepository/kbot \
 > --chart="./helm" \
 > --interval=1m \
@@ -40,7 +40,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: kbot
-  namespace: demo-namespace
+  namespace: course
 spec:
   chart:
     spec:
