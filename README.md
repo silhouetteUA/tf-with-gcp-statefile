@@ -1,12 +1,17 @@
 # tf-with-gcp-statefile
-Basic TF project with state file located on GCP bucket
 
+TF project with state file located on GCP bucket
 Both - local (KIND) and remote (GCP-GKE) deployment are available here
 
+This TF workflow creates:
 
-***Create manifest for a git source for FluxCD:***
+- K8S cluster: local via KIND *OR* GCP-GKE
+- Deploys FluxCD on K8S
+- FluxCD start reconciliation with remote gut hub repo: kbot
 
+**Create manifest for a git source for FluxCD:**
 
+````
 flux create source git kbot \                                                                                                                            
 > --url=https://github.com/silhouetteUA/kbot \
 > --branch=main \
@@ -24,11 +29,12 @@ spec:
     branch: main
   url: https://github.com/silhouetteUA/kbot
 
+````
 
 
-  ***Create manifest for helmrelease using object created above:***
+  **Create manifest for helmrelease using object created above:**
 
-
+````
 flux create helmrelease kbot \                                                                                                                                
 > --namespace=course \
 > --source=GitRepository/kbot \
@@ -50,13 +56,9 @@ spec:
         kind: GitRepository
         name: kbot
   interval: 1m0s
-
+````
 
 
 
 Add these two YAML files to and commit the changes in order to start Flux to reconcile the state (it will create kbot app from Helm charts):
 **https://github.com/silhouetteUA/kbot/tree/main/cluster/fluxcd-test/demo-namespace**
-
-
-
-  
