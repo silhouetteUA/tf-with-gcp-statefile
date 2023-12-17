@@ -54,7 +54,7 @@ spec:
 
 
 
-Commit add these two YAML files to and commit the changes in order to start Flux to reconcile the state (it will create kbot app from Helm charts):
+Add these two YAML files to and commit the changes in order to start Flux to reconcile the state (it will create kbot app from Helm charts):
 **https://github.com/silhouetteUA/kbot/tree/main/cluster/fluxcd-test/demo-namespace**
 
 
