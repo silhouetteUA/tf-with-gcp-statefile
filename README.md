@@ -6,6 +6,7 @@ Both - local (KIND) and remote (GCP-GKE) deployment are available here
 
 ***Create manifest for a git source for FluxCD:***
 
+"""
 flux create source git kbot \                                                                                                                            
 > --url=https://github.com/silhouetteUA/kbot \
 > --branch=main \
@@ -22,12 +23,12 @@ spec:
   ref:
     branch: main
   url: https://github.com/silhouetteUA/kbot
-
+"""
 
 
   ***Create manifest for helmrelease using object created above:***
 
-
+"""
 flux create helmrelease kbot \                                                                                                                                
 > --namespace=demo \
 > --source=GitRepository/kbot \
@@ -49,6 +50,7 @@ spec:
         kind: GitRepository
         name: kbot
   interval: 1m0s
+"""
 
 
 
