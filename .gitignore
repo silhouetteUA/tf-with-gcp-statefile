@@ -2,3 +2,5 @@
 terraform.tfvars
 show.output
 terraform.tfstate*
+edmitr-flux-cluster-config
+test-cluster-config
