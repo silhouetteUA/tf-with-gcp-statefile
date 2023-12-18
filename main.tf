@@ -3,6 +3,16 @@ terraform {
     bucket = "edmitr-tf-bucket"
     prefix = "terraform/state_gke"
   }
+  required_providers {
+    flux = {
+      source  = "fluxcd/flux"
+      version = "1.2.1"
+    }
+    github = {
+      source  = "integrations/github"
+      version = ">=5.18.0"
+    }
+  }
 }
 
 
@@ -11,6 +21,42 @@ module "gke_cluster" {
   GOOGLE_REGION  = var.GOOGLE_REGION
   GOOGLE_PROJECT = var.GOOGLE_PROJECT
   GKE_NUM_NODES  = var.GKE_NUM_NODES
+}
+
+provider "github" {
+  owner = var.github_org
+  token = var.github_token
+}
+
+resource "tls_private_key" "flux" {
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P256"
+}
+
+resource "github_repository_deploy_key" "this" {
+  title      = "Flux2"
+  repository = var.github_repository
+  key        = tls_private_key.flux.public_key_openssh
+  read_only  = "false"
+  depends_on = [tls_private_key.flux]
+}
+
+provider "flux" {
+  kubernetes = {
+    config_path = module.gke_cluster.kubeconfig
+  }
+  git = {
+    url = "ssh://git@github.com/${var.github_org}/${var.github_repository}.git"
+    ssh = {
+      username    = "git"
+      private_key = tls_private_key.flux.private_key_pem
+    }
+  }
+}
+
+resource "flux_bootstrap_git" "this" {
+  depends_on = [github_repository_deploy_key.this, module.gke_cluster]
+  path       = var.TARGET_PATH
 }
 
 
@@ -28,6 +74,7 @@ module "gke_cluster" {
 #     }
 #     flux = {
 #       source = "fluxcd/flux"
+#       version = "1.2.1"
 #     }
 #     github = {
 #       source  = "integrations/github"
