@@ -29,8 +29,8 @@ provider "github" {
 }
 
 resource "tls_private_key" "flux" {
-  algorithm   = "ECDSA"
-  ecdsa_curve = "P256"
+  algorithm   = var.ALGORITHM
+  ecdsa_curve = var.ECDSA_CURVE
 }
 
 resource "github_repository_deploy_key" "this" {
