@@ -54,7 +54,7 @@ variable "github_org" {
 
 variable "github_repository" {
   type    = string
-  default = "kbot"
+  default = "gitops-flux-sops"
 }
 ################### LOCAL deployment STARTS HERE (localhost KIND cluster + FluxCD + repo reconciliation) ###################
 
