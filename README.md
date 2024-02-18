@@ -1,6 +1,5 @@
 # tf-with-gcp-statefile
 
-TF project: week7, practice3
 Both - local (KIND) and remote (GCP-GKE) deployment are available here
 
 This TF workflow creates:
